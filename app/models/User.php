@@ -6,6 +6,18 @@ class User
     {
         $this->db = new Database;
     }
+    public function register($data)
+    {
+        $this->db->query('INSERT INTO sharepost.share_users (name, email, password) VALUES(:name, :email, :password)');
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':password', $data['password']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            false;
+        }
+    }
 
     public function find_user_by_email($email)
 
