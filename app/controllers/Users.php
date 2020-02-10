@@ -57,6 +57,7 @@ class Users extends Controller
                 //register user 
                 // var_dump($this->userModel->register($data));
                 if ($this->userModel->register($data)) {
+                    flash('register_success', 'You are registerd and can log in');
                     redirect('users/login');
                 } else {
                     die('something went wrong');
@@ -101,10 +102,24 @@ class Users extends Controller
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter password';
             }
+            if ($this->userModel->find_user_by_email($data['email'])) {
+            } else {
+                $data['email_err'] = 'No user found';
+            }
 
 
-            if (empty($data['email=_err']) && empty($data['password_err'])) {
-                die('sucess');
+            if (empty($data['email_err']) && empty($data['password_err'])) {
+                //set loged in user
+                $loggedinUser = $this->userModel->login($data['email'], $data['password']);
+                var_dump($data);
+                var_dump($loggedinUser);
+                if ($loggedinUser) {
+                    //create session
+                    $this->create_login_sesion($loggedinUser);
+                } else {
+                    $data['password_err'] = ' Password incorect';
+                    $this->view('users/login', $data);
+                }
             } else {
                 $this->view('users/login', $data);
             }
@@ -122,6 +137,30 @@ class Users extends Controller
 
             ];
             $this->view('users/login', $data);
+        }
+    }
+    public function create_login_sesion($user)
+    {
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_mail'] = $user->mail;
+        $_SESSION['user_name'] = $user->name;
+        redirect('pages/index');
+    }
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_mail']);
+        unset($_SESSION['user_name']);
+        session_destroy();
+        redirect('users/login');
+    }
+
+    public function is_loggedin()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -18,6 +18,19 @@ class User
             false;
         }
     }
+    public function login($email, $password)
+    {
+        $this->db->query('SELECT * FROM sharepost.share_users WHERE email= :email');
+        $this->db->bind(':email', $email);
+        $row = $this->db->single();
+
+        $hash_pasword = $row->password;
+        if (password_verify($password, $hash_pasword)) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
 
     public function find_user_by_email($email)
 
