@@ -111,8 +111,8 @@ class Users extends Controller
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //set loged in user
                 $loggedinUser = $this->userModel->login($data['email'], $data['password']);
-                var_dump($data);
-                var_dump($loggedinUser);
+                //var_dump($data);
+                //var_dump($loggedinUser);
                 if ($loggedinUser) {
                     //create session
                     $this->create_login_sesion($loggedinUser);

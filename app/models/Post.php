@@ -26,4 +26,17 @@ class Post
         $result = $this->db->resultSet();
         return $result;
     }
+    public function addPost($data)
+    {
+
+        $this->db->query('INSERT INTO sharepost.sh_posts (title, user_id, body) VALUES(:title,:user_id, :body)');
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':user_id', $data['user_id']);
+        $this->db->bind(':title', $data['title']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            false;
+        }
+    }
 }
