@@ -22,3 +22,12 @@ function flash($name = '', $message = '', $class = 'alert alert-success')
         }
     }
 }
+
+function is_loggedin()
+{
+    if (isset($_SESSION['user_id'])) {
+        return true;
+    } else {
+        return false;
+    }
+}
