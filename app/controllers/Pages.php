@@ -7,6 +7,9 @@ class Pages extends Controller
 
   public function index()
   {
+    if (is_loggedin()) {
+      redirect('posts');
+    }
     $data = [
       'title' => "Sasha's posts",
       'description' => 'Simple social network based on php framework '
