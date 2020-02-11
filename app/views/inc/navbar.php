@@ -26,8 +26,11 @@
                     </li>
 
                 <?php else : ?>
+                    <li class="nav-item text-center">
+                        <a class="nav-link" href="#">Welcome <?php echo $_SESSION['user_name']; ?> </span></a>
+                    </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo URLROOT; ?>/users/logout">Logout </span></a>
+                        <a class="nav-link" href="<?php echo URLROOT; ?>/users/logout">| Logout </span></a>
                     </li>
 
 
