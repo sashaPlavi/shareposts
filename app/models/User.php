@@ -50,4 +50,11 @@ class User
             return false;
         }
     }
+    public function getUser_by_id($id)
+    {
+        $this->db->query('SELECT * FROM sharepost.share_users WHERE id =:id ');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
 }

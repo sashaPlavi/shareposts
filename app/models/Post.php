@@ -39,4 +39,25 @@ class Post
             false;
         }
     }
+    public function getPost_by_id($id)
+    {
+        $this->db->query('SELECT * FROM sharepost.sh_posts WHERE id =:id ');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+    public function updatePost($data)
+    {
+        //var_dump($data);
+
+        $this->db->query('UPDATE sharepost.sh_posts SET title=:title, body=:body WHERE id= :id ');
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':title', $data['title']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            false;
+        }
+    }
 }
